@@ -1,0 +1,9 @@
+{
+    "generic": {
+        "action": "action",
+        "war": "war",
+        "drama": "drama",
+        "horror": "horror",
+        "generic": "type"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "generic": {
+        "action": "اكشن",
+        "war": "حرب",
+        "drama": "دراما",
+        "horror": "رعب",
+        "generic": "النوع"
+    }
+}
