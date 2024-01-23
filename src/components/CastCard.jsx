@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CastCard = ({ name, character, profile_path, id }) => {
-  if (!profile_path) return <></>;
+
   return (
     <Link
       to={`/people/${id}`}

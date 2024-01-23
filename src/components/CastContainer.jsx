@@ -20,6 +20,7 @@ const CastContainer = ({ cast }) => {
       }}
     >
       {cast?.map((actor, index) => {
+        if (!actor.profile_path) return <></>;
         return (
           <SwiperSlide key={index}>
             <CastCard {...actor} />

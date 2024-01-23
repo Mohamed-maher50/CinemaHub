@@ -9,19 +9,32 @@ import SwiperContainer from "../components/utility/Swiper/SwiperContainer";
 import { getData } from "../api/getData";
 import i18n from "../i18n";
 import { formatDuration } from "../lib/runtimeFormat";
-import ProgressCircle from "../components/ProgressCircle";
 import StarRatings from "react-star-ratings";
-
+import SkeletonContainer from "../components/utility/SkeletonContainer"
+import { breakpoints } from "../components/movie/defaultSwiperProps";
 const MoviePage = () => {
   const [movieDitails, setMovieDitails] = useState({});
   const location = useLocation();
   const { movieId } = useParams();
+  const [loading, setLoading] = useState(false);
+
+  if (movieDitails.credits) {
+    // movieDitails.credits.cast = []
+  }
+  console.log(movieDitails.credits?.cast.length);
   useEffect(() => {
+    setLoading(true);
+
     (async () => {
-      const [result, reultError] = await getData(
-        `/3/movie/${movieId}?append_to_response=videos,credits,recommendations,reviews&language=${i18n.language}`
-      );
-      if (!reultError) setMovieDitails(result);
+      setTimeout(async () => {
+
+
+        const [result, reultError] = await getData(
+          `/3/movie/${movieId}?append_to_response=videos,credits,recommendations,reviews&language=${i18n.language}`
+        );
+        if (!reultError) setMovieDitails(result);
+        setLoading(false)
+      }, 4000);
     })();
   }, [movieId, location, i18n.language]);
 
@@ -93,55 +106,65 @@ const MoviePage = () => {
       <div className="container mt-20 mx-auto">
         <TypeOfMovieHeader title={"Trillers"} />
         {movieDitails.videos && <VideoContainer {...movieDitails?.videos} />}
+        {
+          loading ? (
+            <SkeletonContainer />
+          ) : movieDitails.credits?.cast?.length ? (
+            <>
+              <TypeOfMovieHeader
+                title={"Cast"}
+                className={"uppercase light_text_shadow"}
+              />
+              <CastContainer cast={movieDitails.credits.cast} />
+            </>
+          ) : (
+            ""
+          )
+        }
 
-        <TypeOfMovieHeader
-          title={"Cast"}
-          className={"uppercase light_text_shadow"}
-        />
 
-        {movieDitails.credits && (
-          <CastContainer cast={movieDitails.credits.cast} />
-        )}
 
-        <TypeOfMovieHeader
-          title={"Reviews"}
-          className={"uppercase light_text_shadow"}
-        />
-        {movieDitails.reviews?.results && (
-          <ReviewsContainer results={movieDitails.reviews.results} />
-        )}
+        {
+          loading ? <SkeletonContainer /> : movieDitails.reviews?.results.length ? <>
 
-        <TypeOfMovieHeader
-          title={"recommended"}
-          className={"uppercase light_text_shadow"}
-        />
+            <TypeOfMovieHeader
+              title={"Reviews"}
+              className={"uppercase light_text_shadow"}
+            />
+            {movieDitails.reviews?.results && (
+              <ReviewsContainer results={movieDitails.reviews.results} />
+            )}
+          </> : ""
+        }
+
+
+        {
+          loading ? <SkeletonContainer /> : movieDitails.recommendations?.results.length ? <>
+            <TypeOfMovieHeader
+              title={"recommended"}
+              className={"uppercase light_text_shadow"}
+            />
+            {
+              <SwiperContainer
+                breakpoints={breakpoints}
+              >
+                {
+                  movieDitails?.recommendations?.results?.map((card, index) => {
+                    if (!card.poster_path) return <></>
+
+                    return (
+                      <SwiperSlide key={index}>
+                        <SwiperContainer.SwiperCard {...card} />
+                      </SwiperSlide>
+                    );
+                  })}
+              </SwiperContainer>
+            }
+          </> : ""
+        }
+
       </div>
-      <SwiperContainer
-        breakpoints={{
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 3,
-          },
-          1024: {
-            slidesPerView: 4,
-          },
-          1300: {
-            slidesPerView: 5,
-          },
-        }}
-      >
-        {movieDitails.recommendations &&
-          movieDitails?.recommendations?.results?.map((card, index) => {
-            return (
-              <SwiperSlide key={index}>
-                <SwiperContainer.SwiperCard {...card} />
-              </SwiperSlide>
-            );
-          })}
-      </SwiperContainer>
+
     </div>
   );
 };

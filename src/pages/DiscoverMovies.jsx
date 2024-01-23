@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import SwiperCard from "../components/utility/Swiper/SwiperCard";
 import { useLocation } from "react-router-dom";
-import Select from "react-select";
 import useQuery from "../lib/SearchPrams";
 import { getData } from "../api/getData";
 import SelectBox from "../components/SelectBox/SelectBox";
-
 const genres = {
   genres: [
     {
@@ -1024,62 +1022,68 @@ const languages = [
   },
 ];
 
-const darkStyles = {
-  container: (provided) => ({
-    ...provided,
-    color: "#fff", // Text color in the control
-    background: "#333", // Background color for the control
-  }),
-  control: (provided, state) => ({
-    ...provided,
-    borderColor: state.isFocused ? "#555" : "#555", // Border color for the control
-    boxShadow: state.isFocused ? "0 0 0 1px #555" : provided.boxShadow,
-    "&:hover": {
-      borderColor: "#555", // Border color on hover
-    },
-
-    background: "#121212",
-    border: "0px solid transparent",
-    // boxShadow: "none",
-  }),
-  menu: (provided) => ({
-    ...provided,
-    backgroundColor: "#333", // Background color for the menu
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    color: state.isSelected ? "#000" : "#fff", // Text color for options
-    background: state.isSelected ? "#fff" : "#333", // Background color for selected options
-    ":hover": {
-      background: state.isSelected ? "#fff" : "#444", // Background color on hover
-    },
-  }),
-};
-
+const sortOption = [
+  {
+    label: "popularity ascending",
+    value: "popularity.asc"
+  },
+  {
+    label: "popularity descending ",
+    value: "popularity.desc"
+  },
+  {
+    label: "revenue ascending ",
+    value: "revenue.asc"
+  },
+  {
+    label: "revenue descending ",
+    value: "revenue.desc"
+  },
+  {
+    label: "vote average ascending ",
+    value: "vote_average.asc"
+  },
+  {
+    label: "vote average descending ",
+    value: "vote_average.desc"
+  },
+]
 const DiscoverMovies = () => {
   const [query, setQuery, clear] = useQuery();
   const [discoverdMovies, setDiscoverdMovies] = useState([]);
   const location = useLocation();
+
+
+
   useEffect(() => {
     (async () => {
+
       console.log(query.toString());
       const [data, err] = await getData(
         `/3/discover/movie?${query.toString()}`
       );
       if (!err) setDiscoverdMovies(data);
+
     })();
   }, [location]);
-  console.log(discoverdMovies);
+
   const handleOnChange = (obj) => {
-    console.log(obj);
     setQuery("with_original_language", obj.iso_639_1);
   };
+  const handleSortBy = (val) => {
+    setQuery("sort_by", val.value);
+  }
 
   return (
     <div className="text-white">
       <div className="container mx-auto">
         <div className="grid md:grid-cols-12 pt-8 ">
+
           <div className="col-span-3 hidden p-3 md:flex flex-col gap-3">
+            <SelectBox
+              onChange={handleSortBy}
+              options={sortOption}
+            />
             <div className="flex flex-wrap gap-y-2 gap-x-1">
               {genres.genres.map((gen, index) => {
                 return (
