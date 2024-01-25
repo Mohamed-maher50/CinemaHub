@@ -1,16 +1,18 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
-import MoviePage from "./pages/MoviePage";
 import Navbar from "./components/utility/Navbar";
 import SearchContainer from "./components/Search/SearchContainer";
 import { SearchProvider } from "./contexts/SearchContext";
-import PeoplePage from "./pages/PeoplePage";
-import { useTranslation } from "react-i18next";
-import DiscoverMovies from "./pages/DiscoverMovies";
-
+import React, { Suspense } from "react";
+import { useSelector } from "react-redux";
+const LazyLoadedMovePage = React.lazy(() => import("./pages/MoviePage"));
+const LazyLoadedDiscoverMovies = React.lazy(() =>
+  import("./pages/DiscoverMovies")
+);
+const LazyLoadedPeoplePage = React.lazy(() => import("./pages/PeoplePage"));
 function App() {
-  const { t, i18n } = useTranslation();
+  const SettingsReducer = useSelector((state) => state.SettingsReducer);
 
   return (
     <div className=" min-h-screen bg-primary">
@@ -20,9 +22,30 @@ function App() {
       </SearchProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movie/:movieId" element={<MoviePage />} />
-        <Route path="/people/:personId" element={<PeoplePage />} />
-        <Route path="/discover" element={<DiscoverMovies />} />
+        <Route
+          path="/movie/:movieId"
+          element={
+            <Suspense>
+              <LazyLoadedMovePage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/people/:personId"
+          element={
+            <Suspense>
+              <LazyLoadedPeoplePage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/discover"
+          element={
+            <Suspense>
+              <LazyLoadedDiscoverMovies />
+            </Suspense>
+          }
+        />
       </Routes>
     </div>
   );

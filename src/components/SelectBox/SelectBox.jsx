@@ -42,11 +42,13 @@ const darkStyles = {
   }),
 };
 
-const SelectBox = ({ options, ...props }) => {
+const SelectBox = ({ options, className, ...props }) => {
   return (
     <>
       <Select
-        className="basic-single  outline-none border-none "
+        className={`basic-single  outline-none border-none ${
+          className ? className : ""
+        } `}
         classNamePrefix="select"
         defaultValue={options[0]}
         isSearchable={true}

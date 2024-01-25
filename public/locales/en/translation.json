@@ -4,6 +4,8 @@
         "war": "war",
         "drama": "drama",
         "horror": "horror",
-        "generic": "type"
+        "generic": "type",
+        "comedy": "comedy",
+        "history": "history"
     }
 }

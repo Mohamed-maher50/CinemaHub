@@ -22,7 +22,7 @@ const SwiperCard = ({
           <img
             src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
             alt="Louvre"
-            className="h-full object-cover  w-full group-hover/item:blur-sm group-hover/item:scale-110 duration-500"
+            className="h-full object-cover  w-full group-hover/item:blur-sm  group-hover/item:scale-110 duration-500"
           />
         </div>
         <div className="absolute flex flex-col p-2 opacity-0 group-hover/item:opacity-100 bottom-0 right-0 left-0 duration-500 z-20 top-0 via-transparent  bg-gradient-to-t  from-black via-10% to-black">

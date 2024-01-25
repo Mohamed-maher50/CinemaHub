@@ -1,20 +1,33 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import axios from "axios";
-import { BrowserRouter } from "react-router-dom";
-import { SettingsProvider } from "./contexts/SettingsContext";
-import "./i18n";
-axios.defaults.baseURL = "https://api.themoviedb.org/";
-axios.defaults.headers.Authorization = `Bearer ${process.env.REACT_APP_API_TOKEN}`;
+
+import {
+  App,
+  BrowserRouter,
+  Drawer,
+  React,
+  SettingsProvider,
+  store,
+  Provider,
+} from "./hooks/indexHook";
+import Sidebar from "./components/utility/Sidebar";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <SettingsProvider>
-        <App />
-      </SettingsProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <SettingsProvider>
+          <Drawer>
+            <Drawer.Content>
+              <App />
+            </Drawer.Content>
+            <Drawer.Sidebar>
+              <Sidebar />
+            </Drawer.Sidebar>
+          </Drawer>
+        </SettingsProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );

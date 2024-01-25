@@ -16,6 +16,7 @@ const ReviewsContainer = ({ results, isLoading = false }) => {
       }}
     >
       {results?.map((card, index) => {
+        
         return (
           <SwiperSlide key={index}>
             <ReviewCard {...card} />

@@ -78,12 +78,8 @@
 ::-webkit-scrollbar-thumb {
   transition: 1s;
   border-radius: 8px;
-  background-image: linear-gradient(
-    to bottom,
-    #0d0e0e,
-    rgb(15 95 225),
-    #0d0e0e
-  );
+
+  background-color: rgba(255, 255, 255, 0.893);
   /* height: auto; */
   min-height: 80px;
   -webkit-transition: 1s;
@@ -94,6 +90,7 @@
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
+  @apply shadow-lg;
 }
 
 @layer components {

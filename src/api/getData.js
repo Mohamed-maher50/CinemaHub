@@ -8,3 +8,12 @@ export const getData = async (url) => {
     return [null, error];
   }
 };
+export const SearchMovies = async (query) => {
+  try {
+    const { data } = await axios.get(`/3/search/movie${query}`);
+
+    return [data, null];
+  } catch (error) {
+    return [null, error];
+  }
+};

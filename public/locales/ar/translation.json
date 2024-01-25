@@ -4,6 +4,8 @@
         "war": "حرب",
         "drama": "دراما",
         "horror": "رعب",
-        "generic": "النوع"
+        "generic": "النوع",
+        "comedy": "كومدي",
+        "history": "تاريخي"
     }
 }

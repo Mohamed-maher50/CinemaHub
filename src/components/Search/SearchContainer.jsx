@@ -4,7 +4,7 @@ import SearchContext from "../../contexts/SearchContext";
 import { IoIosClose } from "react-icons/io";
 import MovieSearchBox from "./MovieSearchBox";
 import { debounce } from "../../lib/waitToRequest";
-import { SearchMovies } from "../../lib/Movies";
+import { SearchMovies } from "../../api/getData";
 
 const SearchContainer = () => {
   const { isResultBoxOpen, closeResultBox } = useContext(SearchContext);
