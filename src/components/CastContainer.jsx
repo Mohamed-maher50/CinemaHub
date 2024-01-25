@@ -2,8 +2,10 @@ import React from "react";
 import SwiperContainer from "./utility/Swiper/SwiperContainer";
 import { SwiperSlide } from "swiper/react";
 import CastCard from "./CastCard";
+import SkeletonContainer from "./utility/SkeletonContainer";
 
-const CastContainer = ({ cast }) => {
+const CastContainer = ({ cast, isLoading = false }) => {
+  if (isLoading) return <SkeletonContainer />;
   return (
     <SwiperContainer
       breakpoints={{

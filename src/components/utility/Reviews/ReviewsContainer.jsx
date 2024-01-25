@@ -2,7 +2,9 @@ import React from "react";
 import SwiperContainer from "../Swiper/SwiperContainer";
 import { SwiperSlide } from "swiper/react";
 import ReviewCard from "./ReviewCard";
-const ReviewsContainer = ({ results }) => {
+import SkeletonContainer from "../SkeletonContainer";
+const ReviewsContainer = ({ results, isLoading = false }) => {
+  console.log(results);
   return (
     <SwiperContainer
       slidesPerView={1}

@@ -9,20 +9,25 @@ import SwiperContainer from "../components/utility/Swiper/SwiperContainer";
 import { getData } from "../api/getData";
 import i18n from "../i18n";
 import { formatDuration } from "../lib/runtimeFormat";
-import ProgressCircle from "../components/ProgressCircle";
 import StarRatings from "react-star-ratings";
+import SkeletonContainer from "../components/utility/SkeletonContainer";
 
 const MoviePage = () => {
   const [movieDitails, setMovieDitails] = useState({});
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const { movieId } = useParams();
   useEffect(() => {
-    (async () => {
-      const [result, reultError] = await getData(
-        `/3/movie/${movieId}?append_to_response=videos,credits,recommendations,reviews&language=${i18n.language}`
-      );
-      if (!reultError) setMovieDitails(result);
-    })();
+    setLoading(true);
+    setTimeout(() => {
+      (async () => {
+        const [result, reultError] = await getData(
+          `/3/movie/${movieId}?append_to_response=videos,credits,recommendations,reviews&language=${i18n.language}`
+        );
+        if (!reultError) setMovieDitails(result);
+        setLoading(false);
+      })();
+    }, 6000);
   }, [movieId, location, i18n.language]);
 
   return (
@@ -92,23 +97,36 @@ const MoviePage = () => {
 
       <div className="container mt-20 mx-auto">
         <TypeOfMovieHeader title={"Trillers"} />
+
         {movieDitails.videos && <VideoContainer {...movieDitails?.videos} />}
 
-        <TypeOfMovieHeader
-          title={"Cast"}
-          className={"uppercase light_text_shadow"}
-        />
-
-        {movieDitails.credits && (
-          <CastContainer cast={movieDitails.credits.cast} />
+        {!loading && !movieDitails.credits?.cast ? (
+          ""
+        ) : (
+          <>
+            <TypeOfMovieHeader
+              title={"Cast"}
+              className={"uppercase light_text_shadow"}
+            />
+            <CastContainer
+              cast={movieDitails.credits?.cast}
+              isLoading={loading}
+            />
+          </>
         )}
+        {loading ? (
+          <SkeletonContainer />
+        ) : movieDitails.reviews?.results?.length ? (
+          <>
+            <TypeOfMovieHeader
+              title={"Reviews"}
+              className={"uppercase light_text_shadow"}
+            />
 
-        <TypeOfMovieHeader
-          title={"Reviews"}
-          className={"uppercase light_text_shadow"}
-        />
-        {movieDitails.reviews?.results && (
-          <ReviewsContainer results={movieDitails.reviews.results} />
+            <ReviewsContainer results={movieDitails.reviews?.results} />
+          </>
+        ) : (
+          ""
         )}
 
         <TypeOfMovieHeader
