@@ -1,97 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import SwiperContainer from "./Swiper/SwiperContainer";
 import { SwiperSlide } from "swiper/react";
-import { pushSearchParams } from "../../lib/SearchPrams";
-import { useNavigate } from "react-router-dom";
-const { genres } = {
-  genres: [
-    {
-      id: 28,
-      name: "Action",
-    },
-    {
-      id: 12,
-      name: "Adventure",
-    },
-    {
-      id: 16,
-      name: "Animation",
-    },
-    {
-      id: 35,
-      name: "Comedy",
-    },
-    {
-      id: 80,
-      name: "Crime",
-    },
-    {
-      id: 99,
-      name: "Documentary",
-    },
-    {
-      id: 18,
-      name: "Drama",
-    },
-    {
-      id: 10751,
-      name: "Family",
-    },
-    {
-      id: 14,
-      name: "Fantasy",
-    },
-    {
-      id: 36,
-      name: "History",
-    },
-    {
-      id: 27,
-      name: "Horror",
-    },
-    {
-      id: 10402,
-      name: "Music",
-    },
-    {
-      id: 9648,
-      name: "Mystery",
-    },
-    {
-      id: 10749,
-      name: "Romance",
-    },
-    {
-      id: 878,
-      name: "Science Fiction",
-    },
-    {
-      id: 10770,
-      name: "TV Movie",
-    },
-    {
-      id: 53,
-      name: "Thriller",
-    },
-    {
-      id: 10752,
-      name: "War",
-    },
-    {
-      id: 37,
-      name: "Western",
-    },
-  ],
-};
+import useQuery from "../../lib/SearchPrams";
+import { useSelector } from "react-redux";
+
 const GenresNav = () => {
-  const nav = useNavigate();
-  const [active] = useState(-1);
+  const { genres } = useSelector((state) => state.genresReducer);
+  const [query, serQuery] = useQuery();
   const handleOnClick = (key, id) => {
-    const url = pushSearchParams(key, id);
-    nav("/discover?" + url);
+    serQuery("with_genres", id);
   };
+
   return (
-    <div role="tablist" className="tabs  tabs-boxed">
+    <div role="tablist" className="tabs z-0 tabs-boxed">
       <SwiperContainer
         slidesPerView={3}
         breakpoints={{
@@ -107,16 +28,26 @@ const GenresNav = () => {
             slidesPerView: 8,
           },
         }}
+        pagination={false}
+        navigation={{
+          enabled: false,
+        }}
         className={"overflow-hidden genresNav"}
         loop={true}
+        freeMode={{
+          enabled: true,
+          momentumBounce: true,
+        }}
       >
-        {genres.map((genre, index) => {
+        {genres?.map((genre, index) => {
           return (
             <SwiperSlide key={index}>
               <span
                 onClick={() => handleOnClick("with_genres", genre.id)}
                 role="tab"
-                className={`tab ${active === index && "tab-active"}`}
+                className={`tab  z-0 ${
+                  query.get("with_genres") == genre.id && "tab-active"
+                }`}
                 key={index}
               >
                 {genre.name}

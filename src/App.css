@@ -1,12 +1,15 @@
 * {
   @apply font-Roboto;
 }
+body {
+  /* overflow: hidden; */
+}
 .swiper-pagination {
   @apply z-50;
 }
 .swiper-button-prev,
 .swiper-rtl .swiper-button-next {
-  @apply z-40 absolute top-1;
+  @apply z-40 absolute;
 }
 .light_text_shadow {
   text-shadow: 5px 5px 25px rgba(12, 140, 232, 0.632),
@@ -59,3 +62,6 @@
     rgba(0, 0, 0, 0.5) 96%
   );
 }
+/* .maher {
+  overflow: hidden;
+} */

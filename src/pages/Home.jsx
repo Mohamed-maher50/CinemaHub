@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import SwiperContainer from "../components/utility/Swiper/SwiperContainer";
-import { SwiperSlide } from "swiper/react";
-import { useTranslation } from "react-i18next";
+import React, { useEffect, useState } from "react";
 import MovieContainer from "../components/movie/MovieContainer";
-import ProgressCircle from "../components/utility/ProgressCircle";
 import { getData } from "../api/getData";
-import i18n from "../i18n";
+import { useSelector } from "react-redux";
+import SkeletonContainer from "../components/utility/SkeletonContainer";
+import HeroMovies from "../components/HeroMovies";
 const heroes = {
   page: 1,
   results: [
@@ -354,125 +352,50 @@ const heroes = {
   total_results: 884367,
 };
 const Home = () => {
-  const progressCircle = useRef(null);
-  const progressContent = useRef(null);
-  const { t } = useTranslation();
+  const { genres } = useSelector((state) => state.genresReducer);
+  const { lang } = useSelector((state) => state.SettingsReducer);
   const [movies, setMovies] = useState([]);
   const [movieLoading, setMovieLoading] = useState(false);
   useEffect(() => {
-    const actionMovies = getData(`/3/discover/movie?with_genres=28`);
-    const dramaMovies = getData(`/3/discover/movie?with_genres=18`);
-    const HorroraMovies = getData(`/3/discover/movie?with_genres=27`);
-    const ComedyaMovies = getData(`/3/discover/movie?with_genres=35`);
-    const HistoryaMovies = getData(`/3/discover/movie?with_genres=36`);
     setMovieLoading(true);
     (async () => {
-      const allMovies = await Promise.all([
-        actionMovies,
-        dramaMovies,
-        HorroraMovies,
-        ComedyaMovies,
-        HistoryaMovies,
-      ]).then((result) => {
-        const filterData = result?.map(([data]) => data);
-        return filterData;
+      const genresReq = genres?.map((gene) => {
+        return getData(
+          `/3/discover/movie?with_genres=${
+            gene.id
+          }&with_original_language=en&language=${lang || "en"}`
+        );
       });
-      setMovies(allMovies);
+      const discoveredMovies = await Promise.all(genresReq).then((data) => {
+        const result = data.map(([genre], index) => {
+          return {
+            genre,
+            object: genres[index],
+          };
+        });
+        return result;
+      });
+      setMovies(discoveredMovies);
       setMovieLoading(false);
     })();
-  }, [i18n.language]);
-  const onAutoplayTimeLeft = (s, time, progress) => {
-    progressCircle.current.style.setProperty("--progress", 1 - progress);
-    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-  };
-
+  }, [lang, genres]);
   return (
     <div className="grid gap-y-4">
-      <SwiperContainer
-        centeredSlidesBounds={true}
-        slidesPerView={1}
-        onAutoplayTimeLeft={onAutoplayTimeLeft}
-        autoplay={{
-          delay: 5000,
-          pauseOnMouseEnter: false,
-        }}
-        freeMode={{
-          enabled: true,
-          momentum: true,
-          momentumRatio: 0.2,
-          sticky: true,
-        }}
-        className={"h-[500px] mb-24"}
-      >
-        {heroes.results.map((card, index) => {
-          return (
-            <SwiperSlide key={index} className=" relative overflow-hidden ">
-              <SwiperContainer.SwiperHeroImage
-                {...card}
-                className=" h-[300px]  overflow-hidden"
-              />
-              <div className="absolute flex flex-col top-0 left-0 bottom-0 right-0 bg-gradient-to-t from-black to-transparent">
-                <div className="container mx-auto flex-grow gap-3 justify-end flex-col flex">
-                  <div className="join flex flex-col  gap-3">
-                    <ProgressCircle
-                      className={
-                        "w-24 md:w-32 text-xl font-bold text-white join-item"
-                      }
-                      percent={card.vote_average * 10}
-                      steps={20}
-                    />
-                  </div>
-                  <h1 className="text-4xl md:text-6xl text-white  bottom-12">
-                    {card.title}
-                  </h1>
-                  <p className="text-white opacity-70 font-light">
-                    {card.overview}
-                  </p>
-                  <span className="text-white badge-outline badge">
-                    {card.release_date}
-                  </span>
-                </div>
-              </div>
-            </SwiperSlide>
-          );
-        })}
-        <div className="autoplay-progress" slot="container-end">
-          <svg viewBox="0 0 48 48" ref={progressCircle}>
-            <circle cx="24" cy="24" r="20"></circle>
-          </svg>
-          <span ref={progressContent}></span>
-        </div>
-      </SwiperContainer>
-      <MovieContainer
-        data={movies[0]?.results}
-        loading={movieLoading}
-        title={t("generic.action")}
-        seeMoreLink="/discover?with_genres=28"
-      />
-      <MovieContainer
-        data={movies[1]?.results}
-        loading={movieLoading}
-        title={t("generic.drama")}
-        seeMoreLink="/discover?with_genres=18"
-      />
-      <MovieContainer
-        data={movies[2]?.results}
-        loading={movieLoading}
-        title={t("generic.horror")}
-        seeMoreLink="/discover?with_genres=27"
-      />
-      <MovieContainer
-        data={movies[3]?.results}
-        loading={movieLoading}
-        title={t("generic.comedy")}
-        seeMoreLink="/discover?with_genres=35"
-      />
-      <MovieContainer
-        data={movies[4]?.results}
-        loading={movieLoading}
-        title={t("generic.history")}
-        seeMoreLink="/discover?with_genres=36"
-      />
+      <HeroMovies data={heroes} />
+      {movieLoading && <SkeletonContainer />}
+      {movieLoading && <SkeletonContainer />}
+      {movieLoading && <SkeletonContainer />}
+      {movieLoading && <SkeletonContainer />}
+      {movieLoading && <SkeletonContainer />}
+      {movies?.map((movie, index) => (
+        <MovieContainer
+          key={index}
+          data={movie?.genre?.results}
+          loading={movieLoading}
+          title={movie?.object?.name}
+          seeMoreLink={`/discover?with_genres=${movie?.object?.id}`}
+        />
+      ))}
     </div>
   );
 };

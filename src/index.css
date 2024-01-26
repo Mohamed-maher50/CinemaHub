@@ -2,26 +2,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* .swiper.swiper-horizontal {
-  @apply overflow-visible;
-} */
-.swiper.genresNav {
+
+/* .swiper.genresNav {
   overflow: hidden !important;
-}
+} */
 .swiper-button-prev,
 .swiper-button-next {
   position: absolute;
-  right: 0px !important;
-  top: -50px !important;
-  left: auto !important;
-  @apply z-50 text-white  after:text-white;
+  color: white;
+  background: #000;
+
+  @apply after:space-x-0 rounded-md text-2xl p-5 hover:bg-white hover:text-secondary duration-500 font-bold;
 }
-.swiper-button-prev {
-  right: 50px !important;
-}
-.overflow-allow {
-  overflow-x: hidden;
-}
+
 .animate-shaw {
   animation-iteration-count: 1;
   animation-duration: 0.3s;

@@ -12,10 +12,13 @@ const LazyLoadedDiscoverMovies = React.lazy(() =>
 );
 const LazyLoadedPeoplePage = React.lazy(() => import("./pages/PeoplePage"));
 function App() {
-  const SettingsReducer = useSelector((state) => state.SettingsReducer);
-
+  const { lang } = useSelector((state) => state.SettingsReducer);
+  console.log(lang === "ar");
   return (
-    <div className=" min-h-screen bg-primary">
+    <div
+      className=" min-h-screen bg-primary "
+      dir={lang === "ar" ? "rtl" : "ltr"}
+    >
       <SearchProvider>
         <Navbar />
         <SearchContainer />

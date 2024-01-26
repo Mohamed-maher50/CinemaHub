@@ -2,17 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import SearchContext from "../../contexts/SearchContext";
 import { Link } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
-import SelectBox from "../SelectBox/SelectBox";
 import { Get_Languages } from "../../lib/configuration";
-import "/node_modules/flag-icons/css/flag-icons.min.css";
-import i18n from "../../i18n";
+
 import { TbMenuDeep } from "react-icons/tb";
 import Drawer from "./Drawer/Drawer";
+import LanguageSelectBox from "./LanguageSelectBox";
 
 const Navbar = () => {
   const [isFixed, setIsFixed] = useState(false);
   const { openResultBox } = useContext(SearchContext);
-  const [langs, setLangs] = useState([]);
+
   window.onscroll = () => {
     if (window.scrollY >= 60 && !isFixed) {
       setIsFixed(true);
@@ -20,17 +19,7 @@ const Navbar = () => {
       setIsFixed(false);
     }
   };
-  useEffect(() => {}, []);
-  const handleOnChange = (val) => {
-    i18n.changeLanguage(val.iso_639_1);
-  };
-  console.log(isFixed);
-  useEffect(() => {
-    (async () => {
-      const [Languages, languagesErrors] = await Get_Languages();
-      if (!languagesErrors) setLangs(Languages);
-    })();
-  }, []);
+
   return (
     <div
       className={`bg-[#151f2ee6] ${
@@ -48,13 +37,7 @@ const Navbar = () => {
               </Link>
             </div>
             <div className="hidden md:block">
-              <SelectBox
-                options={langs}
-                getOptionValue={(obj) => obj.iso_639_1}
-                className="w-36"
-                onChange={handleOnChange}
-                getOptionLabel={(obj) => <span>{obj.english_name}</span>}
-              />
+              <LanguageSelectBox />
             </div>
             {/* <SearchInput /> */}
             <div onClick={openResultBox} className="w-fit">

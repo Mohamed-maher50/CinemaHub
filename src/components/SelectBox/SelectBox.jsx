@@ -46,7 +46,7 @@ const SelectBox = ({ options, className, ...props }) => {
   return (
     <>
       <Select
-        className={`basic-single  outline-none border-none ${
+        className={`basic-single  outline-none z-30 border-none ${
           className ? className : ""
         } `}
         classNamePrefix="select"

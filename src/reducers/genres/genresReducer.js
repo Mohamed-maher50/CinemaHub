@@ -10,14 +10,12 @@ const genresSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getGenresThunk.pending, (state, { payload }) => {
       state.isLoading = true;
-      console.log(payload);
     });
     builder.addCase(getGenresThunk.fulfilled, (state, { payload }) => {
       if (payload?.genres) state.genres = payload.genres;
       state.isLoading = false;
     });
     builder.addCase(getGenresThunk.rejected, (state, { payload }) => {
-      console.log(payload);
       state.isLoading = false;
     });
   },

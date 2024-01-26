@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 
 const ProgressCircle = ({ value }) => {
   let classNames = "radial-progress  ";
-
   if (value < 25) {
     classNames += " text-red-400";
   } else if (value < 50) {
@@ -23,7 +22,5 @@ const ProgressCircle = ({ value }) => {
     </div>
   );
 };
-//ref={progressContent}
-//ref={progressCircle}
 
 export default ProgressCircle;

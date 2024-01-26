@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { SettingsProvider } from "../contexts/SettingsContext";
 import Drawer from "../components/utility/Drawer/Drawer";
 import genresReducer from "../reducers/genres/genresReducer";
-import "../i18n";
+
 import "../index.css";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";

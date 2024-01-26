@@ -26,7 +26,6 @@ const SwiperContainer = ({ children, className, ...config }) => {
       speed={1000}
       autoplay={{
         delay: 5000,
-
         pauseOnMouseEnter: true,
       }}
       effect="creative"
@@ -34,7 +33,7 @@ const SwiperContainer = ({ children, className, ...config }) => {
         enabled: true,
       }}
       {...config}
-      className={`relative  overflow-allow w-full ${className}`}
+      className={`relative   w-full ${className} `}
     >
       {children}
     </Swiper>

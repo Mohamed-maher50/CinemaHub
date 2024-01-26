@@ -38,7 +38,8 @@ const MovieContainer = ({ loading, data, title, seeMoreLink = "" }) => {
               )}
             </div>
           </div>
-          <SwiperContainer breakpoints={breakpoints}>
+
+          <SwiperContainer className={"w-full pb-5"} breakpoints={breakpoints}>
             {data?.map((card, index) => {
               return (
                 <SwiperSlide key={index}>

@@ -15,7 +15,7 @@ const SwiperCard = ({
   return (
     <Link
       to={`/movie/${id}`}
-      className="card  cursor-pointer group/item w-full h-80  "
+      className="card rounded-md overflow-hidden shadow-lg shadow-secondary cursor-pointer group/item w-full h-80  "
     >
       <div className="relative h-full w-full overflow-hidden ">
         <div className="overflow-hidden h-full">

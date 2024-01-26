@@ -7,26 +7,23 @@ import SwiperCard from "../components/utility/Swiper/SwiperCard";
 import TypeOfMovieHeader from "../components/utility/TypeOfMovieHeader";
 import { useParams } from "react-router-dom";
 import { getData } from "../lib/people";
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
+import { useSelector } from "react-redux";
 
 const PeoplePage = () => {
   const [personalData, setPersonalData] = useState({});
-  // const { language } = useLanguage();
+  const { lang } = useSelector((state) => state.SettingsReducer);
   console.log(personalData);
   const { personId } = useParams();
 
   useEffect(() => {
     (async () => {
       const [data, err] = await getData(
-        `/3/person/${personId}?append_to_response=movie_credits,external_ids&language=${i18n.language}`
+        `/3/person/${personId}?append_to_response=movie_credits,external_ids&language=${lang}`
       );
-      console.log(data);
+
       if (!err) setPersonalData(data);
     })();
-
-    console.log(i18n.language);
-  }, [personId, i18n.language]);
+  }, [personId, lang.length, lang]);
 
   return (
     <div>
@@ -41,21 +38,29 @@ const PeoplePage = () => {
 
             <div className="flex flex-col gap-2">
               <div className=" rounded-md p-1 flex  my-2 w-fit gap-2 text-yellow-500">
-                <SocialIcons
-                  link={`https://twitter.com/${personalData.external_ids?.twitter_id}`}
-                >
-                  <FaTwitter />
-                </SocialIcons>
-                <SocialIcons
-                  link={`https://www.instagram.com/${personalData.external_ids?.instagram_id}`}
-                >
-                  <FaInstagram />
-                </SocialIcons>
-                <SocialIcons
-                  link={`https://www.facebook.com/${personalData.external_ids?.facebook_id}`}
-                >
-                  <FaFacebookF />
-                </SocialIcons>
+                {personalData.external_ids?.twitter_id && (
+                  <SocialIcons
+                    link={`https://twitter.com/${personalData.external_ids?.twitter_id}`}
+                  >
+                    <FaTwitter />
+                  </SocialIcons>
+                )}
+
+                {personalData.external_ids?.instagram_id && (
+                  <SocialIcons
+                    link={`https://www.instagram.com/${personalData.external_ids?.instagram_id}`}
+                  >
+                    <FaInstagram />
+                  </SocialIcons>
+                )}
+
+                {personalData.external_ids?.facebook_id && (
+                  <SocialIcons
+                    link={`https://www.facebook.com/${personalData.external_ids?.facebook_id}`}
+                  >
+                    <FaFacebookF />
+                  </SocialIcons>
+                )}
               </div>
               <div className="badge  badge-secondary p-3">
                 <span className="pr-2">known for department :</span>

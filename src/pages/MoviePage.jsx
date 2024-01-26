@@ -7,31 +7,27 @@ import { useLocation, useParams } from "react-router-dom";
 import { SwiperSlide } from "swiper/react";
 import SwiperContainer from "../components/utility/Swiper/SwiperContainer";
 import { getData } from "../api/getData";
-import i18n from "../i18n";
 import { formatDuration } from "../lib/runtimeFormat";
 import StarRatings from "react-star-ratings";
 import SkeletonContainer from "../components/utility/SkeletonContainer";
 import { breakpoints } from "../components/movie/defaultSwiperProps";
+import { useSelector } from "react-redux";
 
 const MoviePage = () => {
   const [movieDitails, setMovieDitails] = useState({});
-  // const [loading, setLoading] = useState(true);
   const location = useLocation();
   const { movieId } = useParams();
   const [loading, setLoading] = useState(false);
+  const { lang } = useSelector((state) => state.SettingsReducer);
 
-  if (movieDitails.credits) {
-    // movieDitails.credits.cast = []
-  }
-  console.log(movieDitails.credits?.cast.length);
   useEffect(() => {
     (async () => {
       const [result, reultError] = await getData(
-        `/3/movie/${movieId}?append_to_response=videos,credits,recommendations,reviews&language=${i18n.language}`
+        `/3/movie/${movieId}?append_to_response=videos,credits,recommendations,reviews&language=${lang}`
       );
       if (!reultError) setMovieDitails(result);
     })();
-  }, [movieId, location, i18n.language]);
+  }, [movieId, location, lang]);
 
   return (
     <div className="md:py-4 ">
