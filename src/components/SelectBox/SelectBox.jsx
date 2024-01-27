@@ -17,16 +17,21 @@ const darkStyles = {
     ...provided,
     borderColor: state.isFocused ? "#555" : "#555", // Border color for the control
     boxShadow: state.isFocused ? "0 0 0 1px #555" : provided.boxShadow,
+    position: "relative",
+
     "&:hover": {
       borderColor: "#555", // Border color on hover
     },
     background: "#121212",
     border: "0px solid transparent",
+
     // boxShadow: "none",
   }),
   menu: (provided) => ({
     ...provided,
     backgroundColor: "#151F2E", // Background color for the menu
+    position: "absolute",
+    zIndex: 200,
   }),
   option: (provided, state) => ({
     ...provided,
@@ -46,14 +51,14 @@ const SelectBox = ({ options, className, ...props }) => {
   return (
     <>
       <Select
-        className={`basic-single  outline-none z-30 border-none ${
+        className={`basic-single  outline-none z-0 border-none ${
           className ? className : ""
         } `}
         classNamePrefix="select"
         defaultValue={options[0]}
         isSearchable={true}
         options={options}
-        styles={darkStyles}
+        styles={{ ...darkStyles }}
         {...props}
       />
     </>

@@ -3,12 +3,14 @@ import SwiperContainer from "./utility/Swiper/SwiperContainer";
 import { SwiperSlide } from "swiper/react";
 import CastCard from "./CastCard";
 import SkeletonContainer from "./utility/SkeletonContainer";
+import { useSelector } from "react-redux";
 
 const CastContainer = ({ cast, isLoading = false }) => {
+  const { lang } = useSelector((state) => state.SettingsReducer);
   if (isLoading) return <SkeletonContainer />;
   return (
     <SwiperContainer
-      dir="ltr"
+      className={`${lang == "ar" ? "flex flex-row-reverse" : ""}`}
       breakpoints={{
         640: {
           slidesPerView: 2,

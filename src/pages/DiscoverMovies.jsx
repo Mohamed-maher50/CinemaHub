@@ -35,8 +35,12 @@ const DiscoverMovies = () => {
     <div className="text-white">
       <div className="container mx-auto">
         <div className="grid md:grid-cols-12 pt-8 ">
-          <div className="col-span-3 hidden p-3 md:flex flex-col gap-3">
-            <SelectBox onChange={handleSortBy} options={sortOption} />
+          <div className="col-span-3 hidden relative p-3 md:flex flex-col gap-3">
+            <SelectBox
+              onChange={handleSortBy}
+              options={sortOption}
+              className={"z-30 absolute "}
+            />
             <div className="flex flex-wrap gap-y-2 gap-x-1">
               {genres.map((gen, index) => {
                 return (
@@ -52,20 +56,22 @@ const DiscoverMovies = () => {
                 );
               })}
             </div>
+            <div className="relative z-0">
+              <SelectBox
+                onChange={handleOnChange}
+                options={languages}
+                className={"z-0 absolute"}
+                getOptionLabel={(obj) => {
+                  return (
+                    <div>
+                      <span>{obj.english_name}</span>
+                    </div>
+                  );
+                }}
+                getOptionValue={(obj) => obj.iso_639_1}
+              />
+            </div>
 
-            <SelectBox
-              onChange={handleOnChange}
-              options={languages}
-              getOptionLabel={(obj) => {
-                return (
-                  <div>
-                    <span>{obj.english_name}</span>
-                    {/* <span className={`fi fi-${obj.iso_639_1}`}></span> */}
-                  </div>
-                );
-              }}
-              getOptionValue={(obj) => obj.iso_639_1}
-            />
             <button
               className="btn btn-secondary text-white text-lg  uppercase"
               onClick={() => {
@@ -83,11 +89,11 @@ const DiscoverMovies = () => {
                 <SelectBox
                   onChange={handleOnChange}
                   options={languages}
+                  className={"z-10"}
                   getOptionLabel={(obj) => {
                     return (
                       <div>
                         <span>{obj.english_name}</span>
-                        {/* <span className={`fi fi-${obj.iso_639_1}`}></span> */}
                       </div>
                     );
                   }}
@@ -96,7 +102,11 @@ const DiscoverMovies = () => {
               </div>
               <div>
                 <span className="label capitalize">sort by</span>
-                <SelectBox onChange={handleSortBy} options={sortOption} />
+                <SelectBox
+                  onChange={handleSortBy}
+                  options={sortOption}
+                  className={"z-20"}
+                />
               </div>
             </div>
             <div className="md:hidden col-span-full  ">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Swiper } from "swiper/react";
 import {
   Autoplay,
@@ -14,6 +14,7 @@ import "swiper/css/pagination";
 import SwiperCard from "./SwiperCard";
 import SwiperVideo from "./SwiperVideo";
 import SwiperHeroImage from "./SwiperHeroImage";
+
 const SwiperContainer = ({ children, className, ...config }) => {
   return (
     <Swiper
