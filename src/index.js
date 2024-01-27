@@ -5,7 +5,6 @@ import {
   BrowserRouter,
   Drawer,
   React,
-  SettingsProvider,
   store,
   Provider,
 } from "./hooks/indexHook";
@@ -17,16 +16,14 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <SettingsProvider>
-          <Drawer>
-            <Drawer.Content>
-              <App />
-            </Drawer.Content>
-            <Drawer.Sidebar>
-              <Sidebar />
-            </Drawer.Sidebar>
-          </Drawer>
-        </SettingsProvider>
+        <Drawer>
+          <Drawer.Content>
+            <App />
+          </Drawer.Content>
+          <Drawer.Sidebar>
+            <Sidebar />
+          </Drawer.Sidebar>
+        </Drawer>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

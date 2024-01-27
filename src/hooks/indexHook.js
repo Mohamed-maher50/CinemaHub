@@ -2,7 +2,7 @@ import React from "react";
 import App from "../App";
 import axios from "axios";
 import { BrowserRouter } from "react-router-dom";
-import { SettingsProvider } from "../contexts/SettingsContext";
+
 import Drawer from "../components/utility/Drawer/Drawer";
 import genresReducer from "../reducers/genres/genresReducer";
 
@@ -22,4 +22,4 @@ const store = configureStore({
 const { lang } = store.getState().SettingsReducer;
 
 store.dispatch(getGenresThunk(`?language=${lang}`));
-export { store, BrowserRouter, SettingsProvider, Drawer, App, React, Provider };
+export { store, BrowserRouter, Drawer, App, React, Provider };

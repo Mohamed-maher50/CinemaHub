@@ -106,27 +106,33 @@ const MoviePage = () => {
         />
 
         {movieDitails.credits && (
-          <CastContainer cast={movieDitails.credits.cast} />
+          <div>
+            <CastContainer cast={movieDitails.credits.cast} />
+          </div>
         )}
 
-        <TypeOfMovieHeader
-          title={"Reviews"}
-          className={"uppercase light_text_shadow"}
-        />
-        {movieDitails.reviews?.results && (
-          <ReviewsContainer results={movieDitails.reviews.results} />
+        {!!movieDitails.reviews?.results?.length && (
+          <div>
+            <TypeOfMovieHeader
+              title={"Reviews"}
+              className={"uppercase light_text_shadow"}
+            />
+            {movieDitails.reviews?.results && (
+              <ReviewsContainer results={movieDitails.reviews.results} />
+            )}
+          </div>
         )}
 
         {loading ? (
           <SkeletonContainer />
         ) : movieDitails.recommendations?.results.length ? (
-          <>
+          <div>
             <TypeOfMovieHeader
               title={"recommended"}
               className={"uppercase light_text_shadow"}
             />
             {
-              <SwiperContainer breakpoints={breakpoints}>
+              <SwiperContainer breakpoints={breakpoints} dir="ltr">
                 {movieDitails?.recommendations?.results?.map((card, index) => {
                   if (!card.poster_path) return <></>;
 
@@ -138,7 +144,7 @@ const MoviePage = () => {
                 })}
               </SwiperContainer>
             }
-          </>
+          </div>
         ) : (
           ""
         )}

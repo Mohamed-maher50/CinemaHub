@@ -8,6 +8,7 @@ const CastContainer = ({ cast, isLoading = false }) => {
   if (isLoading) return <SkeletonContainer />;
   return (
     <SwiperContainer
+      dir="ltr"
       breakpoints={{
         640: {
           slidesPerView: 2,

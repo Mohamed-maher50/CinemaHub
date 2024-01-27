@@ -13,7 +13,7 @@ const LazyLoadedDiscoverMovies = React.lazy(() =>
 const LazyLoadedPeoplePage = React.lazy(() => import("./pages/PeoplePage"));
 function App() {
   const { lang } = useSelector((state) => state.SettingsReducer);
-  console.log(lang === "ar");
+
   return (
     <div
       className=" min-h-screen bg-primary "
