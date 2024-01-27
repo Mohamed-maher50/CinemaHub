@@ -6,14 +6,6 @@
 /* .swiper.genresNav {
   overflow: hidden !important;
 } */
-.swiper-button-prev,
-.swiper-button-next {
-  position: absolute;
-  color: white;
-  background: #000;
-
-  @apply after:space-x-0 rounded-md text-2xl p-5 hover:bg-white hover:text-secondary duration-500 font-bold;
-}
 
 .animate-shaw {
   animation-iteration-count: 1;
@@ -117,4 +109,22 @@
   .my-react-select-container .my-react-select__single-value {
     @apply text-neutral-600 dark:text-neutral-200;
   }
+}
+.swiper-button-prev,
+.swiper-button-next {
+  position: absolute;
+  color: white;
+  background: #000;
+
+  @apply after:space-x-0 rounded-md text-lg  after:text-inherit p-5 hover:bg-white hover:text-secondary duration-500 font-bold;
+}
+.swiper-button-prev {
+  @apply after:content-["prev"];
+}
+.swiper-button-next {
+  @apply after:content-["next"];
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 20px;
 }
