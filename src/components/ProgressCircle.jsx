@@ -22,5 +22,7 @@ const ProgressCircle = ({ value }) => {
     </div>
   );
 };
+//ref={progressContent}
+//ref={progressCircle}
 
 export default ProgressCircle;

@@ -354,11 +354,14 @@ const heroes = {
 const Home = () => {
   const { genres } = useSelector((state) => state.genresReducer);
   const { lang } = useSelector((state) => state.SettingsReducer);
+  const [topRatingMovies, setTopRatingMovies] = useState([]);
   const [movies, setMovies] = useState([]);
   const [movieLoading, setMovieLoading] = useState(false);
   useEffect(() => {
     setMovieLoading(true);
     (async () => {
+      const [data, err] = await getData(`/3/movie/top_rated?language=${lang}`);
+      if (!err) setTopRatingMovies(data);
       const genresReq = genres?.map((gene) => {
         return getData(
           `/3/discover/movie?with_genres=${
@@ -379,9 +382,10 @@ const Home = () => {
       setMovieLoading(false);
     })();
   }, [lang, genres]);
+
   return (
     <div className="grid gap-y-4">
-      <HeroMovies data={heroes} />
+      <HeroMovies data={topRatingMovies} dir={lang == "ar" ? "rtl" : "ltr"} />
       {movieLoading && <SkeletonContainer />}
       {movieLoading && <SkeletonContainer />}
       {movieLoading && <SkeletonContainer />}

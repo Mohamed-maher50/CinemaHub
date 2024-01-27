@@ -79,7 +79,7 @@ const DiscoverMovies = () => {
             {/* for small screens */}
             <div className="grid col-span-full grid-cols-2 gap-2 md:hidden">
               <div>
-                <span className="label capitalize">movie language</span>
+                <span className="label capitalize">lng</span>
                 <SelectBox
                   onChange={handleOnChange}
                   options={languages}

@@ -1,8 +1,8 @@
 import React from "react";
-import SwiperContainer from "../Swiper/SwiperContainer";
+import SwiperContainer from "../utility/Swiper/SwiperContainer";
 import { SwiperSlide } from "swiper/react";
 import ReviewCard from "./ReviewCard";
-import SkeletonContainer from "../SkeletonContainer";
+import SkeletonContainer from "../utility/SkeletonContainer";
 const ReviewsContainer = ({ results, isLoading = false }) => {
   console.log(results);
   return (
@@ -16,7 +16,6 @@ const ReviewsContainer = ({ results, isLoading = false }) => {
       }}
     >
       {results?.map((card, index) => {
-        
         return (
           <SwiperSlide key={index}>
             <ReviewCard {...card} />

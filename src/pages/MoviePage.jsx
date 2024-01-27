@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ReviewsContainer from "../components/utility/Reviews/ReviewsContainer";
+import ReviewsContainer from "../components/Reviews/ReviewsContainer";
 import VideoContainer from "../components/movie/VideoContainer";
 import CastContainer from "../components/CastContainer";
 import TypeOfMovieHeader from "../components/utility/TypeOfMovieHeader";
@@ -25,6 +25,7 @@ const MoviePage = () => {
       const [result, reultError] = await getData(
         `/3/movie/${movieId}?append_to_response=videos,credits,recommendations,reviews&language=${lang}`
       );
+      console.log(result);
       if (!reultError) setMovieDitails(result);
     })();
   }, [movieId, location, lang]);
