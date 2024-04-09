@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import FilterHeaderList from "./FilterHeaderList";
-import InputRange from "react-input-range";
-import "react-input-range/lib/css/index.css";
 import { useSearchParams } from "react-router-dom";
+import Slider from "react-slider";
 function FilterRatingItem() {
   const [searchparams, setSearchParams] = useSearchParams();
-  let initialValues = {
-    min: searchparams.get("vote_average.gte") || 0,
-    max: searchparams.get("vote_average.lte") || 10,
-  };
-  const [minValue, setMinValue] = useState(initialValues);
-  const onRatingChange = ({ min, max }) => {
+  let initialValues = [
+    searchparams.get("vote_average.gte") || 0,
+    searchparams.get("vote_average.lte") || 10,
+  ];
+  const [values, setValues] = useState(initialValues);
+
+  const onRatingChange = ([min, max]) => {
     setSearchParams((prev) => {
       prev.set("vote_average.gte", min);
       prev.set("vote_average.lte", max);
@@ -18,7 +18,7 @@ function FilterRatingItem() {
     });
   };
   useEffect(() => {
-    setMinValue(initialValues);
+    setValues(initialValues);
   }, [searchparams]);
   const restRating = () => {
     setSearchParams((prev) => {
@@ -30,13 +30,15 @@ function FilterRatingItem() {
   return (
     <>
       <FilterHeaderList header="Rating" restHandler={restRating} />
-      <InputRange
-        maxValue={10}
-        minValue={0}
-        formatLabel={() => ""}
-        value={minValue}
-        onChange={setMinValue}
-        onChangeComplete={onRatingChange}
+      <Slider
+        min={0}
+        onChange={setValues}
+        value={values}
+        defaultValue={values}
+        onAfterChange={onRatingChange}
+        max={10}
+        className=" h-0.5 rounded-lg bg-indigo-500   w-full"
+        thumbClassName="h-4 w-4 bg-indigo-300 cursor-pointer -translate-y-1/2 outline-none rounded-full"
       />
     </>
   );

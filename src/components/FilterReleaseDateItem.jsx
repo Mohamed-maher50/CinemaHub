@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import InputRange from "react-input-range";
-import "react-input-range/lib/css/index.css";
+import React, { useState } from "react";
 import FilterHeaderList from "./FilterHeaderList";
+import Slider from "react-slider";
 import { useSearchParams } from "react-router-dom";
 function FilterReleaseDateItem() {
   const [searchparams, setSearchParams] = useSearchParams();
-  let initialValues = {
-    min: searchparams.get("release_date.gte")
+
+  let initialValues = [
+    searchparams.get("release_date.gte")
       ? +searchparams.get("release_date.gte").split("-")[0]
       : 1900,
-    max: searchparams.get("release_date.lte")
+    searchparams.get("release_date.lte")
       ? +searchparams.get("release_date.lte").split("-")[0]
       : new Date().getFullYear(),
-  };
+  ];
 
-  const [minValue, setMinValue] = useState(initialValues);
+  const [values, setValues] = useState(initialValues);
 
-  const onReleaseDateChange = ({ min, max }) => {
+  const onReleaseDateChange = ([min, max]) => {
     setSearchParams((prev) => {
       prev.set("release_date.gte", `${min}-1-1`);
       prev.set("release_date.lte", `${max}-1-1`);
@@ -29,21 +29,22 @@ function FilterReleaseDateItem() {
       prev.delete("release_date.lte");
       return prev;
     });
-    setMinValue(initialValues);
+    setValues(initialValues);
   };
+
   return (
     <>
       <FilterHeaderList header="Release Date" restHandler={restReleaseDate} />
       <span className="px-2">
-        <InputRange
-          minValue={1900}
-          maxValue={new Date().getFullYear()}
-          formatLabel={(val) => {
-            return val;
-          }}
-          value={minValue}
-          onChange={setMinValue}
-          onChangeComplete={onReleaseDateChange}
+        <Slider
+          min={1900}
+          onChange={setValues}
+          value={values}
+          defaultValue={values}
+          onAfterChange={onReleaseDateChange}
+          max={new Date().getFullYear()}
+          className=" h-0.5 rounded-lg bg-indigo-500   w-full"
+          thumbClassName="h-4 w-4 bg-indigo-300 cursor-pointer -translate-y-1/2 outline-none rounded-full"
         />
       </span>
     </>
