@@ -21,7 +21,7 @@ let breakpoints = {
   },
 };
 function MovieProvides() {
-  const { isLoading, providers } = useMovieProvidersHook();
+  const { providers } = useMovieProvidersHook();
   const [searchparams, setSearchParams] = useSearchParams();
 
   const movieProviderClickHandler = (provider_id) => {
@@ -29,14 +29,14 @@ function MovieProvides() {
       prev.set("with_watch_providers", provider_id);
       prev.set("watch_region", "US");
       return prev;
-    });
+    }, {});
   };
   const { lang } = useParams();
   return (
     <>
       <Swiper
         key={lang}
-        slidesPerView={6}
+        slidesPerView={5}
         modules={[Autoplay, Navigation]}
         breakpoints={breakpoints}
         speed={700}

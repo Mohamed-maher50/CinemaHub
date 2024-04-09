@@ -948,7 +948,7 @@ function LanguageListBox() {
   const nav = useNavigate();
   let { lang } = useParams();
 
-  const [searchparams, setSearchParams] = useSearchParams();
+  const [searchparams] = useSearchParams();
   let defaultLang = lang ? findDefaultLang(lang) : languages[0];
   const [selected, setSelected] = useState(defaultLang);
 
