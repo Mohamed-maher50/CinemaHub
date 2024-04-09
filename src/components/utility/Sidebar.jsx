@@ -2,19 +2,17 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import LanguageSelectBox from "./LanguageSelectBox";
+import Logo from "../Logo";
 
 const Sidebar = () => {
   const { genres } = useSelector((state) => state.genresReducer);
   const handleClick = () => {
     document.getElementById("my-drawer")?.click();
   };
+  const lang = localStorage.getItem("lang");
   return (
     <ul className="menu grid gap-y-1 w-80 min-h-full bg-secondary ">
-      <Link to={"/"} className="py-2 px-2   border-b-slate-300  w-fit">
-        <h1 className="border-y-2 px-2 py-2 mb-5 uppercase w-fit text-white border-blue-500 drop-shadow-lg text-xl">
-          Cinema Hub
-        </h1>
-      </Link>
+      <Logo lang={lang || "en"} />
       <ul>
         <li className="text-lg capitalize p-1">lang</li>
         <LanguageSelectBox />

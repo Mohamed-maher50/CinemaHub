@@ -16,28 +16,40 @@ import { useSelector } from "react-redux";
 const MoviePage = () => {
   const [movieDitails, setMovieDitails] = useState({});
   const location = useLocation();
-  const { movieId } = useParams();
+  const { movieId, lang } = useParams();
   const [loading, setLoading] = useState(false);
-  const { lang } = useSelector((state) => state.SettingsReducer);
 
+  const [coverImageLoaded, setCoverImageLoaded] = useState(false);
   useEffect(() => {
     (async () => {
       const [result, reultError] = await getData(
         `/3/movie/${movieId}?append_to_response=videos,credits,recommendations,reviews&language=${lang}`
       );
-      console.log(result);
       if (!reultError) setMovieDitails(result);
     })();
   }, [movieId, location, lang]);
-
+  console.log(movieDitails);
   return (
     <div className="md:py-4 ">
       <div className={`relative  `}>
         <img
+          style={{
+            display: coverImageLoaded ? "block" : "none",
+          }}
           src={`https://image.tmdb.org/t/p/original/${movieDitails?.backdrop_path}`}
           alt=""
           className=" w-full object-cover h-[900px] md:h-[700px] "
+          onLoad={() => setCoverImageLoaded(true)}
         />
+        <img
+          style={{
+            display: !coverImageLoaded ? "block" : "none",
+          }}
+          src={`/images/movie/pexels-tima-miroshnichenko-7991581.jpg`}
+          alt=""
+          className=" w-full object-cover h-[900px] md:h-[700px] "
+        />
+
         <div className="absolute top-0 left-0 right-0 bottom-0 bg-poster">
           <div className="container mx-auto ">
             <div className="grid  pt-16 gap-2 md:grid-cols-9">
@@ -96,9 +108,12 @@ const MoviePage = () => {
       </div>
 
       <div className="container mt-20 mx-auto">
-        <TypeOfMovieHeader title={"Trillers"} />
-
-        {movieDitails.videos && <VideoContainer {...movieDitails?.videos} />}
+        {movieDitails.videos?.length && (
+          <>
+            <TypeOfMovieHeader title={"Trillers"} />
+            <VideoContainer {...movieDitails?.videos} />
+          </>
+        )}
 
         <TypeOfMovieHeader
           title={"Cast"}

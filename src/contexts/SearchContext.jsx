@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 const SearchContext = createContext();
 export const SearchProvider = ({ children }) => {
@@ -7,6 +7,10 @@ export const SearchProvider = ({ children }) => {
   const closeResultBox = () => {
     setIsResultBoxOpen(false);
   };
+  useEffect(() => {
+    if (isResultBoxOpen) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "auto";
+  }, [isResultBoxOpen]);
   const openResultBox = () => {
     setIsResultBoxOpen(true);
   };

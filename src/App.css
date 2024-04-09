@@ -62,3 +62,81 @@ body {
     rgba(0, 0, 0, 0.5) 96%
   );
 }
+
+.eye_loader {
+  display: inline-flex;
+  gap: 10px;
+}
+.eye_loader:before,
+.eye_loader:after {
+  content: "";
+  height: 20px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #000 95%, #0000) 35% 35%/6px 6px
+    no-repeat #fff;
+  animation: l5 3s infinite;
+}
+@keyframes l5 {
+  0%,
+  11% {
+    background-position: 35% 35%;
+  }
+  14%,
+  36% {
+    background-position: 65% 35%;
+  }
+  38%,
+  61% {
+    background-position: 65% 65%;
+  }
+  64%,
+  86% {
+    background-position: 35% 65%;
+  }
+  88%,
+  100% {
+    background-position: 35% 35%;
+  }
+}
+/* HTML: */
+.static_loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: sans-serif;
+
+  padding: 0 5px 8px 0;
+  background: repeating-linear-gradient(90deg, currentColor 0 8%, #0000 0 10%)
+    200% 100%/200% 3px no-repeat;
+  animation: l3 2s steps(6) infinite;
+  @apply font-Roboto;
+}
+.static_loader::before {
+  content: "Loading...";
+}
+
+@keyframes l24 {
+  100% {
+    background-position: left;
+  }
+}
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 30px;
+  padding: 0 5px 8px 0;
+  background: repeating-linear-gradient(90deg, currentColor 0 8%, #0000 0 10%)
+    200% 100%/200% 3px no-repeat;
+  animation: l3 2s steps(6) infinite;
+}
+.loader:before {
+  content: "Loading...";
+}
+@keyframes l3 {
+  to {
+    background-position: 80% 100%;
+  }
+}

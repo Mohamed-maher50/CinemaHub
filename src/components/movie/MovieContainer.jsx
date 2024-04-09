@@ -6,7 +6,13 @@ import SkeletonContainer from "../utility/SkeletonContainer";
 import TypeOfMovieHeader from "../utility/TypeOfMovieHeader";
 import { Link } from "react-router-dom";
 
-const MovieContainer = ({ loading, data, title, seeMoreLink = "" }) => {
+const MovieContainer = ({
+  loading,
+  data,
+  title,
+  seeMoreLink = "",
+  ...props
+}) => {
   if (loading)
     return (
       <>

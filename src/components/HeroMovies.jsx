@@ -3,7 +3,7 @@ import { SwiperSlide } from "swiper/react";
 import SwiperContainer from "./utility/Swiper/SwiperContainer";
 import ProgressCircle from "./utility/ProgressCircle";
 import { FaPlay } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const defaultProps = {
   centeredSlidesBounds: true,
@@ -28,12 +28,12 @@ const HeroMovies = ({ data, dir, ...props }) => {
     progressCircle.current.style.setProperty("--progress", 1 - progress);
     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
   };
-
+  const { lang } = useParams();
   return (
     <SwiperContainer
+      key={lang}
       onAutoplayTimeLeft={onAutoplayTimeLeft}
       {...defaultProps}
-      dir={"ltr"}
       {...props}
     >
       {data?.results?.map((card, index) => {
@@ -57,24 +57,23 @@ const HeroMovies = ({ data, dir, ...props }) => {
                     steps={20}
                   />
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <h1 className="text-4xl md:text-6xl text-white  bottom-12">
                     {card.title}
                   </h1>
-                  <Link
-                    to={`/movie/${card.id}`}
-                    className="w-14 h-14 border-white border bg-white rounded-full shadow-sm  flex justify-center items-center cursor-pointer relative after:w-full duration-300 hover:scale-105 hover:after:w-0 hover:after:h-0 after:rounded-full after:duration-500  after:bg-secondary after:h-full  hover:after:text-secondary group  text-xl"
-                  >
-                    <FaPlay className="absolute left-1/2 top-1/2 -translate-x-1/2  -translate-y-1/2 text-white group-hover:text-secondary text-2xl" />
-                  </Link>
                 </div>
                 <p className="text-white opacity-70 font-light">
                   {card.overview}
                 </p>
-
                 <span className="text-white badge-outline badge">
                   {card.release_date}
-                </span>
+                </span>{" "}
+                <Link
+                  to={`movie/${card.id}`}
+                  className="w-14 h-14 border-white border bg-white rounded-full shadow-sm  flex justify-center items-center cursor-pointer relative after:w-full duration-300 hover:scale-105 hover:after:w-0 hover:after:h-0 after:rounded-full after:duration-500  after:bg-secondary after:h-full  hover:after:text-secondary group  text-xl"
+                >
+                  <FaPlay className="absolute left-1/2 top-1/2 -translate-x-1/2  -translate-y-1/2 text-white group-hover:text-secondary text-2xl" />
+                </Link>
               </div>
             </div>
           </SwiperSlide>

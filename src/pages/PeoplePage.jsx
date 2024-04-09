@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 const PeoplePage = () => {
   const [personalData, setPersonalData] = useState({});
   const { lang } = useSelector((state) => state.SettingsReducer);
-  console.log(personalData);
+
   const { personId } = useParams();
 
   useEffect(() => {

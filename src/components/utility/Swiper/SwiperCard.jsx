@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProgressCircle from "../../ProgressCircle";
 const SwiperCard = ({
   poster_path,
@@ -9,12 +9,12 @@ const SwiperCard = ({
   release_date,
   genres,
   id,
-  ...other
 }) => {
+  const { lang } = useParams();
   if (!poster_path) return <></>;
   return (
     <Link
-      to={`/movie/${id}`}
+      to={`/${lang}/movie/${id}`}
       className="card rounded-md overflow-hidden shadow-lg shadow-secondary cursor-pointer group/item w-full h-80  "
     >
       <div className="relative h-full w-full overflow-hidden ">
@@ -22,10 +22,11 @@ const SwiperCard = ({
           <img
             src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
             alt="Louvre"
+            key={id}
             className="h-full object-cover  w-full group-hover/item:blur-sm  group-hover/item:scale-110 duration-500"
           />
         </div>
-        <div className="absolute flex flex-col p-2 opacity-0 group-hover/item:opacity-100 bottom-0 right-0 left-0 duration-500 z-20 top-0 via-transparent  bg-gradient-to-t  from-black via-10% to-black">
+        <div className="absolute flex flex-col p-2 opacity-0 group-hover/item:opacity-100 bottom-0 right-0 left-0 duration-500 z-10 top-0 via-transparent  bg-gradient-to-t  from-black via-10% to-black">
           <div className="flex flex-col flex-grow justify-end h-fit   gap-3">
             <div className="flex flex-wrap  flex-col   justify-between">
               <h1 className=" text-white text-2xl  duration-500  font-bold font-Roboto">
