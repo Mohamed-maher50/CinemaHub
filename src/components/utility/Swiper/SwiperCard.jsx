@@ -8,10 +8,13 @@ const SwiperCard = ({
   popularity,
   release_date,
   genres,
+  profile_path,
   id,
 }) => {
+  console.log(profile_path);
   const { lang } = useParams();
   if (!poster_path) return <></>;
+  console.log(poster_path);
   return (
     <Link
       to={`/${lang}/movie/${id}`}

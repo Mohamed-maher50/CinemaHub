@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { SearchProvider } from "../../contexts/SearchContext";
 import Navbar from "../utility/Navbar";
 import SearchContainer from "../Search/SearchContainer";
+import Footer from "../Footer";
 function LanguageLayout() {
   return (
     <>
@@ -11,6 +12,7 @@ function LanguageLayout() {
         <SearchContainer />
       </SearchProvider>
       <Outlet />
+      <Footer />
     </>
   );
 }

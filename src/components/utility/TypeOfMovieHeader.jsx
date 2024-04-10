@@ -4,7 +4,7 @@ const TypeOfMovieHeader = ({ title, className }) => {
   return (
     <div>
       <h1
-        className={`text-3xl font-[900]  drop-shadow-lg text-white py-7 ${
+        className={` max-md:text-2xl text-3xl font-[900]  drop-shadow-lg text-white py-7 ${
           className ? className : ""
         }`}
       >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import SwiperCard from "../components/utility/Swiper/SwiperCard";
 
 import { FaFilter } from "react-icons/fa";
@@ -6,7 +6,7 @@ import Pagination from "../components/Pagination";
 import GenresNav from "../components/utility/GenresNav";
 import MovieProvides from "../MovieProvides";
 import useMoviesHook from "../hooks/useMoviesHook";
-import { RouterProvider, useSearchParams, useParams } from "react-router-dom";
+import { useSearchParams, useParams } from "react-router-dom";
 import { GrPowerReset } from "react-icons/gr";
 
 const DiscoverMovies = () => {
@@ -42,7 +42,17 @@ const DiscoverMovies = () => {
   return (
     <div className="text-white">
       <div className="container mx-auto">
-        <MovieProvides />
+        <div className="my-2">
+          <MovieProvides
+            onClick={(id) => {
+              setSearchParams((prev) => {
+                prev.set("with_watch_providers", id);
+                prev.set("watch_region", "US");
+                return prev;
+              });
+            }}
+          />
+        </div>
         <div className="py-2 flex justify-between">
           <label
             htmlFor="discover-drawer"
@@ -108,38 +118,6 @@ const DiscoverMovies = () => {
             </button>
           </div> */}
           <div className="grid  grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 ">
-            {/* for small screens */}
-            {/* <div className="grid col-span-full grid-cols-2 gap-2 md:hidden">
-              <div>
-                <span className="label capitalize">lng</span>
-                <SelectBox
-                  onChange={handleOnChange}
-                  options={languages}
-                  className={"z-10"}
-                  getOptionLabel={(obj) => {
-                    return (
-                      <div>
-                        <span>{obj.english_name}</span>
-                      </div>
-                    );
-                  }}
-                  getOptionValue={(obj) => obj.iso_639_1}
-                />
-              </div>
-              <div>
-                <span className="label capitalize">sort by</span>
-                <SelectBox
-                  onChange={handleSortBy}
-                  options={sortOption}
-                  className={"z-20"}
-                />
-              </div>
-            </div> */}
-            {/* <div className="md:hidden col-span-full  ">
-              <span className="label">genres</span>
-              <GenresNav />
-            </div> */}
-
             {isLoading ? (
               "loading..."
             ) : movies?.results?.length ? (

@@ -1,17 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const CastCard = ({ name, character, profile_path, id }) => {
-
+  const { lang } = useParams();
   return (
     <Link
-      to={`/people/${id}`}
+      to={`/${lang}/people/${id}`}
       className="card h-96 overflow-hidden bg-secondary shadow-xl"
     >
       <div className=" ">
         <img
-          src={`https://image.tmdb.org/t/p/w342/${profile_path}`}
-          alt="Shoes"
+          src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
+          alt={name}
           style={{
             height: "280px",
           }}

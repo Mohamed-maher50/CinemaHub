@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getData } from "../api/getData";
 import { useSelector } from "react-redux";
 import HeroMovies from "../components/HeroMovies";
-import { useSearchParams, useParams } from "react-router-dom";
+import { useSearchParams, useParams, useNavigate } from "react-router-dom";
 import HomeMovies from "../components/movie/HomeMovies";
 import MovieProvides from "../MovieProvides";
 
@@ -11,7 +11,7 @@ const Home = () => {
   const [topRatingMovies, setTopRatingMovies] = useState([]);
   const [searchparams] = useSearchParams();
   const { lang } = useParams();
-
+  const nav = useNavigate();
   useEffect(() => {
     (async () => {
       const [data, err] = await getData(
@@ -20,13 +20,17 @@ const Home = () => {
       if (!err) setTopRatingMovies(data);
     })();
   }, [lang, genres]);
-
+  const providerOnClick = (id) => {
+    nav({
+      pathname: `discover`,
+      search: `with_watch_providers=${id}&watch_region=US`,
+    });
+  };
   return (
     <div className="flex flex-col gap-4">
       <HeroMovies data={topRatingMovies} />
-      <div className="">
-        <MovieProvides key={lang} />
-      </div>
+
+      <MovieProvides key={lang} onClick={providerOnClick} />
 
       <>
         {genres?.map((gene, index) => {

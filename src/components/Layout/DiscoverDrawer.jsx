@@ -1,6 +1,5 @@
 import React from "react";
 import { MdDone } from "react-icons/md";
-
 import FilterRatingItem from "../FilterRatingItem";
 import FilterGenresItem from "../FilterGenresItem";
 import FilterReleaseDateItem from "../FilterReleaseDateItem";

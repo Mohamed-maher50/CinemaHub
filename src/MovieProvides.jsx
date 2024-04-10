@@ -20,9 +20,9 @@ let breakpoints = {
     slidesPerView: 15,
   },
 };
-function MovieProvides() {
+function MovieProvides({ onClick }) {
   const { providers } = useMovieProvidersHook();
-  const [searchparams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const movieProviderClickHandler = (provider_id) => {
     setSearchParams((prev) => {
@@ -33,35 +33,35 @@ function MovieProvides() {
   };
   const { lang } = useParams();
   return (
-    <>
-      <Swiper
-        key={lang}
-        slidesPerView={5}
-        modules={[Autoplay, Navigation]}
-        breakpoints={breakpoints}
-        speed={700}
-        navigation
-        slidesPerGroup={7}
-        wrapperClass="z-10"
-        freeMode
-        loop
-        autoplay={{
-          delay: 2000,
-          pauseOnMouseEnter: true,
-        }}
-        className="select-none"
-      >
-        {providers?.map((provider) => {
-          return (
-            <SwiperSlide
-              onClick={() => movieProviderClickHandler(provider.provider_id)}
-            >
-              <MovieProvidersCard {...provider} />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-    </>
+    <Swiper
+      key={lang}
+      slidesPerView={5}
+      modules={[Autoplay, Navigation]}
+      breakpoints={breakpoints}
+      speed={700}
+      navigation
+      slidesPerGroup={7}
+      wrapperClass="z-10"
+      freeMode
+      loop
+      autoplay={{
+        delay: 2000,
+        pauseOnMouseEnter: true,
+      }}
+      className="select-none w-full"
+    >
+      {providers?.map((provider) => {
+        return (
+          <SwiperSlide
+            onClick={() => {
+              onClick && onClick(provider.provider_id);
+            }}
+          >
+            <MovieProvidersCard {...provider} />
+          </SwiperSlide>
+        );
+      })}
+    </Swiper>
   );
 }
 

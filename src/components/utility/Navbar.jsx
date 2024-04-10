@@ -2,8 +2,7 @@ import React, { useContext, useState } from "react";
 import SearchContext from "../../contexts/SearchContext";
 import { useParams } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
-import { TbMenuDeep } from "react-icons/tb";
-import Drawer from "./Drawer/Drawer";
+
 import LanguageListBox from "../LanguageListBox";
 import Logo from "../Logo";
 
@@ -22,9 +21,9 @@ const Navbar = () => {
 
   return (
     <div
-      className={`bg-[#151f2ee6] ${
-        isFixed ? "fixed" : "relative"
-      } shadow-sm shadow-secondary z-20  w-full top-0 duration-500 right-0 left-0`}
+      className={`bg-black ${
+        isFixed ? "fixed border-b border-indigo-600" : "relative"
+      }  z-20  w-full top-0 duration-500 right-0 left-0`}
     >
       <div className="container mx-auto">
         <div className="navbar sticky  top-0 left-0 right-0 ">
